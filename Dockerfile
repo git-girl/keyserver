@@ -8,6 +8,7 @@ FROM ubuntu
 # Install deps and things for rusttoolchain install
 RUN apt update
 RUN apt install -y git gnutls-bin nettle-dev gcc llvm-dev libclang-dev build-essential pkg-config gettext 
+# TODO: install vim htop and net-tools i use those a lot when debugging
 
 # install rust toolchain
 WORKDIR /home
@@ -17,10 +18,18 @@ WORKDIR /home/hagrid
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 
-# Cargo install here is weird idk how to properly source it as sourcing cargo env just adds binaries to path i did that 
-RUN cp Rocket.toml.dist Rocket.toml
-# make sure there is a /home/hagrid/templates
-RUN mkdir templates
-
 RUN cargo build --release
-# Execute with docker run hagrid-pgp-key-server:latest ./target/release/hagrid
+
+# --- COMPILES FINISHED -- #
+
+RUN mkdir -p public/assets templates email-templates \
+            tokens tmp keys public/keys   && \
+    cp -r dist/assets          public/    && \
+    cp -r dist/templates       .          && \
+    cp -r dist/email-templates .
+
+# use my server conf
+COPY ./Rocket.toml ./Rocket.toml
+
+# RUN cp Rocket.toml.dist Rocket.toml
+RUN ./target/release/hagrid
