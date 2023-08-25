@@ -20,25 +20,6 @@ maintenance_file = "state/maintenance"
 enable_prometheus = false
 email_template_dir = "dist/email-templates"
 
-[staging]
-base-URI = "http://localhost:8080"
-# base-URI-Onion = "http://localhost:8080"
-from = "noreply@localhost"
-x-accel-redirect = false
-token_secret = "hagrid"
-token_validity = 3600
-# NOTE: there is an index in my templates file index.html.mbs
-template_dir = "templates"
-assets_dir = "public/assets"
-keys_internal_dir = "keys"
-keys_external_dir = "public/keys"
-token_dir = "tokens"
-tmp_dir = "tmp"
-mail_rate_limit = 3600
-maintenance_file = "maintenance"
-enable_prometheus = false
-email_template_dir = "email-templates"
-
 [release]
 base-URI = "http://localhost:8080"
 # base-URI-Onion = "http://localhost:8080"

@@ -31,5 +31,6 @@ RUN mkdir -p public/assets templates email-templates \
 # use my server conf
 COPY ./Rocket.toml ./Rocket.toml
 
+EXPOSE 8080 8080
 # RUN cp Rocket.toml.dist Rocket.toml
-# RUN ./target/release/hagrid
+CMD ./target/release/hagrid
