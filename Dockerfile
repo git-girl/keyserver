@@ -32,4 +32,4 @@ RUN mkdir -p public/assets templates email-templates \
 COPY ./Rocket.toml ./Rocket.toml
 
 # RUN cp Rocket.toml.dist Rocket.toml
-RUN ./target/release/hagrid
+# RUN ./target/release/hagrid
