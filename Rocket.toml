@@ -21,13 +21,12 @@ enable_prometheus = false
 email_template_dir = "dist/email-templates"
 
 [release]
-base-URI = "http://localhost:8080"
+# running in a docker container so localhost is correct i think
+base-URI = "https://lotta.keys.gay"
 # base-URI-Onion = "http://localhost:8080"
-from = "noreply@localhost"
+from = "mail@lotta.gay"
 x-accel-redirect = false
-token_secret = "hagrid"
 token_validity = 3600
-# NOTE: there is an index in my templates file index.html.mbs
 template_dir = "templates"
 assets_dir = "public/assets"
 keys_internal_dir = "keys"
@@ -38,3 +37,5 @@ mail_rate_limit = 3600
 maintenance_file = "maintenance"
 enable_prometheus = false
 email_template_dir = "email-templates"
+# openssl rand -base64 32
+token_secret = "REPLACED_BY_SED"

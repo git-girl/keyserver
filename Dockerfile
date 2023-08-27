@@ -31,6 +31,13 @@ RUN mkdir -p public/assets templates email-templates \
 # use my server conf
 COPY ./Rocket.toml ./Rocket.toml
 
+# ISSUE: This command works local and in container but somehow not during build
+# Step 12/14 : RUN sed -i -e "s/REPLACED_BY_SED/$(openssl rand -base64 32)/g" ./Rocket.toml
+#  ---> Running in 1a00a7d6426b
+# sed: -e expression #1, char 29: unknown option to `s'
+# The command '/bin/sh -c sed -i -e "s/REPLACED_BY_SED/$(openssl rand -base64 32)/g" ./Rocket.toml' returned a non-zero code: 1
+RUN sed -i -e "s/REPLACED_BY_SED/$(openssl rand -base64 32)/g" ./Rocket.toml
+
 EXPOSE 8080 8080
 # RUN cp Rocket.toml.dist Rocket.toml
 CMD ./target/release/hagrid
