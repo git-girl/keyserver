@@ -7,7 +7,7 @@
 I want to have a Docker Image that i can easily deploy
 
 build: \
-`docker build -t hagrid-pgp-key-server .`
+`docker build --build-arg CACHEBUST=$(date +%s) -t hagrid-pgp-key-server .`
 
 run: \
 `docker run --dns=1.1.1.1 -p 8080:8080 hagrid-pgp-key-server:latest`
@@ -17,7 +17,7 @@ run: \
 - [x] Setup a prod ready env so i can run `cargo build --relase`
   - adapt `Rocket.toml` and put it in the docker image generation
 - [ ] Setup nginx reverse proxy (and learn understand reverse proxy setups)
-- [ ] Understand wth the token secret is being used for 
+- [x] Understand wth the token secret is being used for 
 
 ### Debugging Notes 
 
@@ -50,3 +50,7 @@ reading that makes it pretty clear that the sealed state is something that's use
 
 `SealedState` is a struct that has a `signing_key` and an `opening_key` \
 
+## Style Todos 
+- [ ] remove the news link from the index html
+
+- [ ] styling css

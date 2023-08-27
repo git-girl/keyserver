@@ -8,7 +8,7 @@ FROM ubuntu
 # Install deps and things for rusttoolchain install
 RUN apt update
 RUN apt install -y git gnutls-bin nettle-dev gcc llvm-dev libclang-dev build-essential pkg-config gettext 
-# TODO: install vim htop and net-tools i use those a lot when debugging
+RUN apt install -y vim htop net-tools
 
 # install rust toolchain
 WORKDIR /home
@@ -30,13 +30,24 @@ RUN mkdir -p public/assets templates email-templates \
 
 # use my server conf
 COPY ./Rocket.toml ./Rocket.toml
+# use my styling adaptions
+COPY public/       ./public
+COPY templates/    ./templates/
 
-# ISSUE: This command works local and in container but somehow not during build
+# Need something to only disable cache on specific commands
+# -> the sed replace because with a cache the build fails there
+# --build-arg CACHEBUST=$(openssl rand -base64 32)
+# Basically a cache bust
+# https://stackoverflow.com/questions/35134713/disable-cache-for-specific-run-commands
+ARG TOKEN_SECRET
+
+# THE COMMAND FAILS WHEN THERE IS A CACHE -> ARG CACHEBUST
+# This command works local and in container but somehow not during build
 # Step 12/14 : RUN sed -i -e "s/REPLACED_BY_SED/$(openssl rand -base64 32)/g" ./Rocket.toml
 #  ---> Running in 1a00a7d6426b
 # sed: -e expression #1, char 29: unknown option to `s'
 # The command '/bin/sh -c sed -i -e "s/REPLACED_BY_SED/$(openssl rand -base64 32)/g" ./Rocket.toml' returned a non-zero code: 1
-RUN sed -i -e "s/REPLACED_BY_SED/$(openssl rand -base64 32)/g" ./Rocket.toml
+RUN sed -i -e "s/REPLACED_BY_SED/$TOKEN_SECRET/g" ./Rocket.toml
 
 EXPOSE 8080 8080
 # RUN cp Rocket.toml.dist Rocket.toml
