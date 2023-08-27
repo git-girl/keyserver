@@ -149,10 +149,6 @@ hr {
     color: var(--surface0);
 }
 
-a.brand {
-    color: var(--text);
-}
-
 .usage > h2 a, .usage > h2 a:visited {
     color: var(--text);
 }
@@ -296,6 +292,16 @@ abbr {
     font-size: 20px;
     font-family: inherit;
     font-weight: bolder;
+}
+
+.rainbow-text {
+  background-image: linear-gradient(to left, var(--mauve), var(--blue), var(--teal), var(--green), var(--yellow), var(--peach), var(--maroon));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-decoration: none;
+}
+.rainbow-text:hover {
+    text-decoration: none;
 }
 
 .manageButton {
